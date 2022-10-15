@@ -4,6 +4,8 @@
 import req from '../support/api/requests'
 import schemas from '../support/api/schemas'
 import assertions from '../support/api/assertions'
+import createBookingBody from '../fixtures/createBookingBody.json'
+import updateBookingBody from '../fixtures/updateBookingBody.json'
 
 describe('Validar teste de contrato do GET Booking', () => {
 
@@ -20,21 +22,7 @@ describe('Validar teste de contrato do GET Booking', () => {
 
 
   it('Criar uma reserva com sucesso', () => {
-    cy.api({
-      method: 'POST',
-      url: 'booking',
-      body: {
-        "firstname": "Jim zoe",
-        "lastname": "Brown yasuo",
-        "totalprice": 111,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2020-01-01",
-          "checkout": "2020-01-02"
-        },
-        "additionalneeds": "Breakfast"
-      }
-    }).then(postBookingResponse => {
+    req.postBooking(createBookingBody).then(postBookingResponse => {
       assertions.shouldHaveStatus(postBookingResponse, 200)
       assertions.shouldBookingIdBePresent(postBookingResponse)
       assertions.shouldContentTypeAppJson(postBookingResponse)
@@ -46,34 +34,20 @@ describe('Validar teste de contrato do GET Booking', () => {
   it('Alterar uma reserva sem token', () => {
 
 
-    cy.api({
-      method: 'PUT',
-      url: 'booking/16',
-      body: {
-        "firstname": "La",
-        "lastname": "James Qualquer",
-        "totalprice": 111,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2020-01-01",
-          "checkout": "2020-01-02"
-        },
-        "additionalneeds": "Breakfast"
-      },
-      failOnStatusCode: false
-    }).then(postbookingResponse => {
-      req.updateBookingWithouToken(postbookingResponse).then(putBookingResponse => {
+    req.postBooking(createBookingBody).then(postbookingResponse => {
+      req.updateBookingWithouToken(postbookingResponse, updateBookingBody).then(putBookingResponse => {
         assertions.shouldHaveStatus(putBookingResponse, 403)
       })
     })
   });
 
   it('Realizar alteração com token válido', () => {
-    req.postBooking().then(postBookingResponse => {
-      req.updateBooking(postBookingResponse).then(putBookingResponse => {
+    req.postBooking(createBookingBody).then(postBookingResponse => {
+      req.updateBooking(postBookingResponse, updateBookingBody).then(putBookingResponse => {
         assertions.shouldHaveStatus(putBookingResponse, 200)
       })
     })
+
   });
   // validar alteração sem token
   // validar alteração com token inválido

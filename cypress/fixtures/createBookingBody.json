@@ -1,0 +1,11 @@
+{
+  "firstname": "Create - Jim zoe",
+  "lastname": "Create - Brown yasuo",
+  "totalprice": 111,
+  "depositpaid": true,
+  "bookingdates": {
+    "checkin": "2020-01-01",
+    "checkout": "2020-01-02"
+  },
+  "additionalneeds": "Breakfast"
+}

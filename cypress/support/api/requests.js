@@ -15,66 +15,35 @@ class Requests {
     })
   }
 
-  postBooking() {
+  postBooking(body) {
     return cy.api({
       method: 'POST',
       url: '/booking',
-      body: {
-        "firstname": "Jim",
-        "lastname": "Tania",
-        "totalprice": 99,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2022-01-01",
-          "checkout": "2022-01-02"
-        },
-        "additionalneeds": "Breakfast"
-      }
+      body: body
     })
-
   }
 
 
-  updateBookingWithouToken(response) {
+  updateBookingWithouToken(response, body) {
     const id = response.body.bookingid
     return cy.api({
       method: 'PUT',
-      url: `booking/${id}`,
-      body: {
-        "firstname": "La",
-        "lastname": "James Qualquer",
-        "totalprice": 111,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2020-01-01",
-          "checkout": "2020-01-02"
-        },
-        "additionalneeds": "Breakfast"
-      },
+      url: `/booking/${id}`,
+      body: body,
       failOnStatusCode: false
     })
   }
 
-  updateBooking(response) {
+  updateBooking(response, body) {
     const id = response.body.bookingid
 
     return cy.api({
-      mehotd: 'PUT',
-      url: `booking/${id}`,
+      method: 'PUT',
+      url: `/booking/${id}`,
       headers: {
         Cookie: `token=${Cypress.env('token')}`
       },
-      body: {
-        "firstname": "La",
-        "lastname": "James Qualquer",
-        "totalprice": 111,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2020-01-01",
-          "checkout": "2020-01-02"
-        },
-        "additionalneeds": "Breakfast"
-      },
+      body: body,
       failOnStatusCode: false
     })
   }

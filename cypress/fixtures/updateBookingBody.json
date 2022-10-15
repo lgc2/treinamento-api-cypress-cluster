@@ -1,0 +1,11 @@
+{
+  "firstname": "Update - La",
+  "lastname": "Update - James Qualquer",
+  "totalprice": 111,
+  "depositpaid": true,
+  "bookingdates": {
+    "checkin": "2022-12-01",
+    "checkout": "2022-12-31"
+  },
+  "additionalneeds": "Breakfast"
+}

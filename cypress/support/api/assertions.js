@@ -3,8 +3,8 @@
 class Assertions {
 
 
-  shouldHaveStatus(response, status) {
-    expect(response.status, `status id ${status}`).to.eq(status)
+  shouldHaveStatus(response, expectedStatus) {
+    expect(response.status).to.eq(expectedStatus)
   }
 
 
