@@ -48,6 +48,43 @@ class Requests {
     })
   }
 
+  deleteBookingWithoutToken(response) {
+    const id = response.body.bookingid
+
+    return cy.api({
+      method: 'DELETE',
+      url: `/booking/${id}`,
+      headers: {},
+      failOnStatusCode: false
+    })
+  }
+
+  deleteBookingWithInvalidToken(response) {
+    const id = response.body.bookingid
+
+    return cy.api({
+      method: 'DELETE',
+      url: `/booking/${id}`,
+      headers: {
+        Cookie: `token=1a2b3c`
+      },
+      failOnStatusCode: false
+    })
+  }
+
+  deleteBooking(response) {
+    const id = response.body.bookingid
+
+    return cy.api({
+      method: 'DELETE',
+      url: `/booking/${id}`,
+      headers: {
+        Cookie: `token=${Cypress.env('token')}`
+      },
+      failOnStatusCode: false
+    })
+  }
+
   postAuth() {
     return cy.api({
       method: 'POST',

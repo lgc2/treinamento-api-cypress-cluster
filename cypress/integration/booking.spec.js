@@ -47,10 +47,30 @@ describe('Validar teste de contrato do GET Booking', () => {
         assertions.shouldHaveStatus(putBookingResponse, 200)
       })
     })
-
   });
-  // validar alteração sem token
-  // validar alteração com token inválido
-  // validar alteração com sucesso
-})
+
+  it('Tentar excluir uma reserva sem token', () => {
+    req.postBooking(createBookingBody).then(postBookingResponse => {
+      req.deleteBookingWithoutToken(postBookingResponse).then(deleteBookingWithoutTokenResponse => {
+        assertions.shouldHaveStatus(deleteBookingWithoutTokenResponse, 403)
+      })
+    })
+  });
+
+  it('Tentar excluir uma reserva com token inválido', () => {
+    req.postBooking(createBookingBody).then(postBookingResponse => {
+      req.deleteBookingWithInvalidToken(postBookingResponse).then(deleteBookingWithInvalidTokenResponse => {
+        assertions.shouldHaveStatus(deleteBookingWithInvalidTokenResponse, 403)
+      })
+    })
+  });
+
+  it('Excluir uma reserva com token válido', () => {
+    req.postBooking(createBookingBody).then(postBookingResponse => {
+      req.deleteBooking(postBookingResponse).then(deleteBookingResponse => {
+        assertions.shouldHaveStatus(deleteBookingResponse, 201)
+      })
+    })
+  });
+});
 
